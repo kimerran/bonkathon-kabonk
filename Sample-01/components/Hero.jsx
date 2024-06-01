@@ -4,14 +4,15 @@ import Logo from './Logo';
 
 const Hero = () => (
   <div className="hero my-5 text-center" data-testid="hero">
-    <Logo testId="hero-logo" />
+    {/* <Logo testId="hero-logo" /> */}
+    <img src='logo.png' height='269px' />
     <h1 className="mb-4" data-testid="hero-title">
-      Next.js Sample Project
+      Onboard your next MILLION hodlers
     </h1>
 
     <p className="lead" data-testid="hero-lead">
-      This is a sample application that demonstrates an authentication flow for a Regular Web App, using{' '}
-      <a href="https://nextjs.org">Next.js</a>
+      KaBonk! lets you onboard your next million holders with ease.
+      Distribute $BONK tokens to your community, track their progress, and reward them for their loyalty.
     </p>
   </div>
 );

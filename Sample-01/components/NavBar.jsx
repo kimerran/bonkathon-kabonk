@@ -28,7 +28,7 @@ const NavBar = () => {
     <div className="nav-container" data-testid="navbar">
       <Navbar color="light" light expand="md">
         <Container>
-          <NavbarBrand className="logo" />
+          
           <NavbarToggler onClick={toggle} data-testid="navbar-toggle" />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar data-testid="navbar-items">
@@ -41,7 +41,8 @@ const NavBar = () => {
                 <>
                   <NavItem>
                     <PageLink href="/csr" className="nav-link" testId="navbar-csr">
-                      Client-side rendered page
+                    <img height='32px' src='logo.png' />
+                      {/* Client-side rendered page */}
                     </PageLink>
                   </NavItem>
                   <NavItem>
