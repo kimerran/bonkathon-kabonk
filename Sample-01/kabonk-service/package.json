@@ -1,0 +1,17 @@
+{
+  "name": "kabonk-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "run:db": "surreal start --log trace --user root --pass root file:mydatabase.db",
+    "surreal:explorer": "open https://surrealist.app/",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "surrealdb.js": "^1.0.0-beta.8"
+  }
+}
