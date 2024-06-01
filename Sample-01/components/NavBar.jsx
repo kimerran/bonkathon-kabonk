@@ -40,9 +40,9 @@ const NavBar = () => {
               {user && (
                 <>
                   <NavItem>
-                    <PageLink href="/csr" className="nav-link" testId="navbar-csr">
-                    <img height='32px' src='logo.png' />
-                      {/* Client-side rendered page */}
+                    <PageLink href="/links" className="nav-link" testId="navbar-csr">
+                    {/* <img height='32px' src='logo.png' /> */}
+                      LINKS
                     </PageLink>
                   </NavItem>
                   <NavItem>
