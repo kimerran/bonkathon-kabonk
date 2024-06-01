@@ -70,9 +70,9 @@ async function initServer() {
 
     // check if already existing
     const isExisting = await db.query('SELECT * FROM wallet WHERE email = $email', {
-      email,
+      email
     });
-    console.log('isExisting', isExisting)
+    console.log('isExisting', isExisting);
     if (isExisting[0].length > 0) {
       return res.json(isExisting[0][0]);
     }
@@ -86,6 +86,21 @@ async function initServer() {
     });
     res.json(newWallet);
   });
+
+  // GET wallet by email
+  app.get('/wallet/', async (req, res) => {
+    const { email } = req.query;
+    if (email) {
+      const wallet = await db.query('SELECT * FROM wallet WHERE email = $email', {
+        email
+      });
+      return res.json(wallet[0][0]);
+    }
+
+    return res.json({ error: 'No email provided' });
+  });
+
+  
 
   const server = app.listen(port, () => console.log(`API Server listening on port ${port}`));
   //   process.on('SIGINT', () => server.close());
