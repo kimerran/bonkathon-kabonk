@@ -1,27 +1,25 @@
 const contentData = [
   {
-    title: 'Configure Other Identity Providers',
-    link: 'https://auth0.com/docs/identityproviders',
+    title: 'Easily Onboard Non-Crypto Natives',
+    link: 'https://kabonk.com/claim/my-first-code',
     description:
-      'Auth0 supports social providers as Facebook, Twitter, Instagram and 100+, Enterprise providers as Microsoft Office 365, Google Apps, Azure, and more. You can also use any OAuth2 Authorization Server.'
+      'KaBonk! makes it easy to onboard your community to your token. Send them a link, and they can claim their first code. No need to worry about wallets, exchanges, or gas fees.'
   },
   {
-    title: 'Enable Multifactor Authentication',
-    link: 'https://auth0.com/docs/mfa',
-    description:
-      'Add an extra layer of security by enabling Multi-factor Authentication, requiring your users to provide more than one piece of identifying information. Push notifications, authenticator apps, SMS, and DUO Security are supported.'
+    title: 'Reward Your Community',
+    link: 'https://kaBonk.com/my-dashboard',
+    description: 'Reward your community for their loyalty. Distribute $BONK tokens to your community, track their progress, and reward them for their loyalty.'
   },
   {
-    title: 'Attack Protection',
-    link: 'https://auth0.com/docs/attack-protection',
+    title: 'Easily Distribute Tokens',
+    link: 'https://kabonk.com/wallet',
     description:
-      'Auth0 can detect anomalies and stop malicious attempts to access your application. Attack protection can alert you and your users of suspicious activity, as well as block further login attempts.'
+      'KaBonk! makes it easy to distribute your tokens. Your token will be distributed to your community in a fair and transparent way. No need to worry about gas fees or exchanges.'
   },
   {
-    title: 'Learn About Rules',
-    link: 'https://auth0.com/docs/rules',
-    description:
-      "Rules are JavaScript functions that execute when a user authenticates to your application. They run once the authentication process is complete, and you can use them to customize and extend Auth0's capabilities."
+    title: 'Community Powered',
+    link: 'https://kabonk.com/contribute',
+    description:  'KaBonk! is a community powered platform. We are always looking for ways to improve our platform. If you have any suggestions, please let us know.'
   }
 ];
 
