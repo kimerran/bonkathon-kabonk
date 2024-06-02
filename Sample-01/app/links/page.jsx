@@ -3,49 +3,60 @@
 import React, { useEffect, useState } from 'react';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 
-import { Table } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 
-const LinkTables = (links) => {
-  return <Table>
-    <thead>
-      <tr>
-        <th>Code</th>
-        <th>Email</th>
-        <th>TimeStamp</th>
-      </tr>
-    </thead>
-    <tbody>\
-      {links.map((link) => {
-        return <tr>
-          <td>{link.code}</td>
-          <td>{link.email}</td>
-          <td>{link.timestamp}</td>
+const LinkTables = links => {
+  console.log('links', links)
+  return (
+    <Table>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Email</th>
+          <th>TimeStamp</th>
+          <th>Share Url</th>
         </tr>
-      })}
-    </tbody>
-  </Table>
-}
-
+      </thead>
+      <tbody>
+        {links && links.map(link => {
+          return (
+            <tr>
+              <td>{link.code}</td>
+              <td>{link.email}</td>
+              <td>{link.timestamp}</td>
+              <td>{`http://localhost:3001/claim/${link.code}`}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </Table>
+  );
+};
 
 export default withPageAuthRequired(function CSRPage() {
+  const [links, setLinks] = useState([]);
 
-    const [links, setLinks] = useState([]);
+  const fetchLinks = async () => {
+    const response = await fetch('/api/links');
+    setLinks(await response.json());
+  };
 
+  useEffect(() => {
+    fetchLinks();
+  }, []);
 
-    const fetchLinks = async () => {
-        const response = await fetch('/api/links');
-        setLinks(await response.json())
+  console.log('loinks', links);
+
+    if (Array.isArray(links) && links.length > 0) {
+      return <>
+      <Button onClick={async () => {
+        fetch('/api/links', {
+          method: 'POST'
+        }).then(() => fetchLinks());
+      }}>Create Link</Button>
+      {LinkTables(links)}
+      
+      </>;
     }
-
-    useEffect(() => {
-        fetchLinks()
-    }, [])
-
-    console.log('loinks', links)    
-
-  return (
-    <>
-        {LinkTables(links)}
-    </>
-  );
+    return <>Unable to load list</>
 });

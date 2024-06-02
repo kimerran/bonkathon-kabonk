@@ -56,12 +56,34 @@ async function initServer() {
   // this just creates a database entry after the claim has been performed
   app.post('/claim', async (req, res) => {
     const claim = req.body;
+
+    // check if already existing
+    const isExisting = await db.query('SELECT * FROM claim WHERE email = $email', {
+      email: claim.email,
+    });
+    console.log('isExisting', isExisting);
+    if (isExisting[0].length > 0) {
+      return res.json(isExisting[0][0]);
+    }
+
     const newClaim = await db.create('claim', {
       email: claim.email,
       referrer: claim.referrer,
       amount: claim.amount
     });
-    res.json(newClaim);
+    return res.json(newClaim[0]);
+  });
+
+  // CHECK if already claimed
+  app.get('/claim', async (req, res) => {
+    const { email } = req.query;
+    if (email) {
+      const isClaimed = await db.query('SELECT * FROM claim WHERE email = $email', {
+        email,
+      });
+      return res.json(isClaimed[0][0]);
+    }
+    return res.json({ error: 'No email provided' });
   });
 
   // CREATE wallets
