@@ -20,6 +20,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.0",
     "@fortawesome/free-solid-svg-icons": "^6.5.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@solana/spl-token": "^0.4.6",
+    "@solana/web3.js": "^1.91.8",
     "bs58": "^5.0.0",
     "concurrently": "^8.2.0",
     "cors": "^2.8.5",

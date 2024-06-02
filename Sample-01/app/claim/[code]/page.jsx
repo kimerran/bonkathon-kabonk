@@ -35,7 +35,7 @@ export default withPageAuthRequired(function CSRPage() {
       const response = await fetch('/api/claim', { method: 'POST' });
       setClaim(await response.json());
     } catch (error) {
-      console.log('errr', error);
+      console.log('errr performClaim', error);
     }
   };
 
@@ -49,7 +49,7 @@ export default withPageAuthRequired(function CSRPage() {
     <div>
       <h1>Claim Your Bonk!</h1>
 
-        {isLoading && <p>Loading...</p>}
+      {isLoading && <p>Loading...</p>}
 
       {!isLoading && (
         <>
