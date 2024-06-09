@@ -2,8 +2,12 @@ require('dotenv').config({ path: './.env.local' });
 
 const solanaWeb3 = require('@solana/web3.js');
 
-const { sendTokenTransaction } = require('./send-token');
-const { createAssociatedTokenAccount, getAssociatedTokenAddress, createAssociatedTokenAccount2 } = require('./create-ata');
+const { sendTokenTransaction, transferBONKto } = require('./send-token');
+const {
+  createAssociatedTokenAccount,
+  getAssociatedTokenAddress,
+  createAssociatedTokenAccount2
+} = require('./create-ata');
 
 const bs58 = require('bs58');
 const express = require('express');
@@ -48,11 +52,12 @@ async function initServer() {
   // CREATE links
   app.post('/link', async (req, res) => {
     const link = req.body;
-    const code = +new Date(); // TODO: generate a random code
+    const newPair = solanaWeb3.Keypair.generate();
+    const code = newPair.publicKey; // TODO: generate a random code
 
     const newLink = await db.create('link', {
       email: link.email,
-      code: +new Date(),
+      code: code.toBase58(),
       timestamp: new Date()
     });
     res.json(newLink);
@@ -65,7 +70,7 @@ async function initServer() {
 
     // check if already existing
     const isExisting = await db.query('SELECT * FROM claim WHERE email = $email', {
-      email: claim.email
+      email: claim.email,
     });
     console.log('isExisting', isExisting);
     if (isExisting[0].length > 0) {
@@ -75,7 +80,9 @@ async function initServer() {
     const newClaim = await db.create('claim', {
       email: claim.email,
       referrer: claim.referrer,
-      amount: claim.amount
+      amount: claim.amount,
+      code: claim.code,
+      status: 'created',
     });
     return res.json(newClaim[0]);
   });
@@ -107,19 +114,12 @@ async function initServer() {
 
     const newPair = solanaWeb3.Keypair.generate();
 
-    const ataTxSign = await createAssociatedTokenAccount(
-      giverPrivateKey,
-      bonkTokenMintAddress,
-      newPair.publicKey.toString()
-    );
-
-    const newWallet = await db.create('wallet', {
+    await db.create('wallet', {
       email,
       public: newPair.publicKey.toString(),
-      secret: bs58.encode(newPair.secretKey),
-      ataTxSign
+      secret: bs58.encode(newPair.secretKey)
     });
-    res.json(newWallet);
+    return res.json({ email, public: newPair.publicKey.toString() });
   });
 
   // GET wallet by email
@@ -140,29 +140,27 @@ async function initServer() {
     const { walletAddress } = req.params;
     console.log('walletAddress', walletAddress);
     const ata = await getAssociatedTokenAddress(bonkTokenMintAddress, walletAddress);
-    
 
     // await createAssociatedTokenAccount2(walletAddress)
 
-    console.log('bonk-service ata', ata)
+    console.log('bonk-service ata', ata);
     return res.json({ ata });
   });
-
-
 
   app.post('/send-token', async (req, res) => {
     const { recipient, amount, claimId } = req.body;
     console.log('body', req.body);
 
     try {
-      const signature = await sendTokenTransaction(giverPrivateKey, bonkTokenMintAddress, recipient, req.body.amount);
+      const signature = await transferBONKto(recipient, amount);
+      // const signature = await sendTokenTransaction(giverPrivateKey, bonkTokenMintAddress, recipient, req.body.amount);
       // const signature = '1RnioJ1mpzT4FKPgAkuKhi6HKeTzyAUfSfyXZMgNkDsdQ24xhxqBVBAPfVfnZKLeGoABQCQUC2DbhbZz7F5VMyd'
       console.log('signature', signature);
 
       const docId = new RecordId('claim', claimId);
       // console.log('docId',docId)
       // update claim
-      const updated = await db.update(docId, {
+      const updated = await db.merge(docId, {
         signature,
         status: 'submitted',
         amount

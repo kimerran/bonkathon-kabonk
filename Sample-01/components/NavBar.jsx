@@ -42,19 +42,19 @@ const NavBar = () => {
                   <NavItem>
                     <PageLink href="/links" className="nav-link" testId="navbar-csr">
                     {/* <img height='32px' src='logo.png' /> */}
-                      LINKS
+                      Links
                     </PageLink>
                   </NavItem>
-                  <NavItem>
+                  {/* <NavItem>
                     <PageLink href="/ssr" className="nav-link" testId="navbar-ssr">
                       Server-side rendered page
                     </PageLink>
-                  </NavItem>
-                  <NavItem>
+                  </NavItem> */}
+                  {/* <NavItem>
                     <PageLink href="/external" className="nav-link" testId="navbar-external">
                       External API
                     </PageLink>
-                  </NavItem>
+                  </NavItem> */}
                 </>
               )}
             </Nav>
