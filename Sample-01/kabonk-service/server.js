@@ -3,7 +3,7 @@ require('dotenv').config({ path: './.env.local' });
 const solanaWeb3 = require('@solana/web3.js');
 
 const { sendTokenTransaction } = require('./send-token');
-const { createAssociatedTokenAccount } = require('./create-ata');
+const { createAssociatedTokenAccount, getAssociatedTokenAddress, createAssociatedTokenAccount2 } = require('./create-ata');
 
 const bs58 = require('bs58');
 const express = require('express');
@@ -134,6 +134,21 @@ async function initServer() {
 
     return res.json({ error: 'No email provided' });
   });
+
+  // GET ATA if existing, trigger create if none
+  app.get('/wallet/ata/:walletAddress', async (req, res) => {
+    const { walletAddress } = req.params;
+    console.log('walletAddress', walletAddress);
+    const ata = await getAssociatedTokenAddress(bonkTokenMintAddress, walletAddress);
+    
+
+    // await createAssociatedTokenAccount2(walletAddress)
+
+    console.log('bonk-service ata', ata)
+    return res.json({ ata });
+  });
+
+
 
   app.post('/send-token', async (req, res) => {
     const { recipient, amount, claimId } = req.body;

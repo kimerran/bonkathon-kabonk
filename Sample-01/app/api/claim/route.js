@@ -1,5 +1,6 @@
 import { getAccessToken, withApiAuthRequired, getSession } from '@auth0/nextjs-auth0';
 import { NextResponse } from 'next/server';
+import { apiGet, apiPost } from '../fetchClient';
 
 const apiUrl = process.env.KABONK_SERVICE_URL || 'http://localhost:3003';
 
@@ -22,23 +23,6 @@ export const GET = withApiAuthRequired(async function getClaims(req) {
     return NextResponse.json({ error: error.message }, { status: error.status || 500 });
   }
 });
-
-const apiPost = async (url, payload) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload) // body data type must match "Content-Type" header
-  });
-
-  return response.json();
-};
-
-const apiGet = async url => {
-  const response = await fetch(url);
-  return response.json();
-};
 
 export const POST = withApiAuthRequired(async function performClaimToken(req) {
   try {
