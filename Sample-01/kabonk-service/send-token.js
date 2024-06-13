@@ -35,7 +35,7 @@ const transferBONKto = async (recipientAddress, amount) => {
   });
 
   const setComputeUnitInstruction = solanaWeb3.ComputeBudgetProgram.setComputeUnitPrice({
-    microLamports: 200000 // increase as needed
+    microLamports: 400000 // increase as needed
   });
 
   const setComputeUnitLimitInstruction = solanaWeb3.ComputeBudgetProgram.setComputeUnitLimit({
