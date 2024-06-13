@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "kabonk-service",
+      "script": "node kabonk-service/server.js"
+    },
+    { "name": "kabonk-web", "script": "npm run dev" },
+    { "name": "db", "script": "npm run run:db"}
+  ]
+}

@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "run:db": "surreal start --log trace --user root --pass root file:mydatabase.db",
+    "run:db": "surreal start --log trace --user root --pass root file:kabonk-service/mydatabase.db",
     "surreal:explorer": "open https://surrealist.app/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"

@@ -13,7 +13,8 @@
     "test:integration": "start-server-and-test start http-get://localhost:3000 cypress:run",
     "test:integration:watch": "start-server-and-test start http-get://localhost:3000 cypress:open",
     "cypress:run": "cypress run --browser chrome",
-    "cypress:open": "cypress open --browser chrome"
+    "cypress:open": "cypress open --browser chrome",
+    "run:db": "surreal start --log trace --user root --pass root file:kabonk-service/mydatabase.db"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
