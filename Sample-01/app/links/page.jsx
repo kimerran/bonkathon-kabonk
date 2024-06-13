@@ -40,7 +40,7 @@ const LinkTables = links => {
       <tbody>
         {links &&
           links.map(link => {
-            const url = `http://localhost:3000/claim/${link.code}`;
+            const url = `https://kabonk.neri.ph/claim/${link.code}`;
             return (
               <tr>
                 <td>{formatCode(link.code)}</td>

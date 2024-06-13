@@ -47,7 +47,7 @@ export const POST = withApiAuthRequired(async function performClaimToken(req) {
     console.log('performing POST send-token', payload);
     const sendToken = await apiPost(`${apiUrl}/send-token`, {
       recipient: publicKey,
-      amount: 2e5, // TODO: modify this amount?
+      amount: 143e5, // TODO: modify this amount?
       claimId: id.split('claim:')[1]
     });
 
